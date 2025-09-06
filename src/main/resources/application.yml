@@ -1,3 +1,45 @@
 spring:
   application:
     name: resilience-spring
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+
+resilience4j:
+  timelimiter:
+    metrics:
+      enabled: true
+    instances:
+      quoteApi:
+        cancel-running-future: true
+        timeout-duration: 2s
+  ratelimiter:
+    metrics:
+      enabled: true
+    instances:
+      quoteApi:
+        register-health-indicator: true
+        limit-for-period: 5
+        limit-refresh-period: 10s
+  circuitbreaker:
+    metrics:
+      enabled: true
+    instances:
+      quoteApi:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: count_based
+logging:
+  level:
+    io.github.resilience4j: DEBUG
