@@ -1,7 +1,7 @@
 package emg.demo.resilience.infrastructure.controller;
 
 import emg.demo.resilience.application.services.QuoteService;
-import emg.demo.resilience.domain.model.Quote;
+import emg.demo.resilience.infrastructure.model.dto.QuoteResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,11 @@ public class QuoteController {
     }
 
     @GetMapping("/quote")
-    public ResponseEntity<Quote> getQuote() {
-        return ResponseEntity.ok(quoteService.getQuote());
+    public ResponseEntity<QuoteResponse> getQuote() {
+        return quoteService.getQuote().map(q ->
+                ResponseEntity.ok(QuoteResponse.from(q))
+        ).orElse(
+                ResponseEntity.internalServerError().build()
+        );
     }
 }

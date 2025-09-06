@@ -42,4 +42,4 @@ resilience4j:
         sliding-window-type: count_based
 logging:
   level:
-    io.github.resilience4j: DEBUG
+    io.github.resilience4j: ERROR
