@@ -15,27 +15,30 @@ Architecture
 Architecture Diagram
 ```mermaid
 flowchart LR
-  subgraph Inbound Adapter (HTTP)
+  subgraph "Inbound Adapter"
     C[QuoteController]
   end
-  subgraph Application
-    UC[GetQuoteUseCase\n(implements GetQuotePort)]
+
+  subgraph "Application"
+    UC[GetQuoteUseCase]
   end
-  subgraph Domain
+
+  subgraph "Domain"
     Q[(Quote)]
     InP[[GetQuotePort]]
     OutP[[RetrieveQuotePort]]
   end
-  subgraph Outbound Adapter (External)
-    A[ChuckQuoteAdapter\n(@CircuitBreaker,@RateLimiter)]
+
+  subgraph "Outbound Adapter"
+    A[ChuckQuoteAdapter]
     EXT[(Chuck Norris API)]
   end
 
-  C -->|calls| UC
-  UC -->|depends on| OutP
-  A -->|implements| OutP
-  UC -->|invokes| A
-  A -->|HTTP| EXT
+  C --> InP
+  UC -. implements .-> InP
+  UC --> OutP
+  A -. implements .-> OutP
+  A --> EXT
   UC --> Q
 ```
 
