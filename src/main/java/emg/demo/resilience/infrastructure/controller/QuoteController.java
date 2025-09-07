@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping(value = "/api/v1", produces = "application/json")
 @Tag(name = "Quotes", description = "Quotes API")
 @SecurityRequirement(name = "resilience-api")
 public class QuoteController {
@@ -26,7 +26,7 @@ public class QuoteController {
         this.quoteService = quoteService;
     }
 
-    @GetMapping("/quote")
+    @GetMapping(value = "/quote", produces = "application/json")
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get a random quote", description = "Returns a random quote from Chuck Norris")
     @ApiResponses(value = {
