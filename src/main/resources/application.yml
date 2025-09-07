@@ -10,7 +10,7 @@ spring:
           issuer-uri: ${KEYCLOAK_ENDPOINT:http://localhost:8080/realms/spring}
 management:
   tracing:
-    enabled: true
+    enabled: false
     sampling:
       probability: 1.0
   zipkin:

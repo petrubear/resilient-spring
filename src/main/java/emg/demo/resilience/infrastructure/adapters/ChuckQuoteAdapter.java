@@ -34,6 +34,6 @@ public class ChuckQuoteAdapter implements RetrieveQuotePort {
 
     public Optional<Quote> getDefaultQuote(Throwable throwable) {
         log.error("quoteApi Fallback called. reason: {}", throwable.getMessage());
-        return Optional.of(Quote.of("Chuck is busy, try again later "));
+        return Optional.of(Quote.of("Chuck is busy, try again later"));
     }
 }
