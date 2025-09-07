@@ -1,7 +1,13 @@
+server:
+  port: 9090
 spring:
   application:
     name: resilience-spring
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ENDPOINT:http://localhost:8080/realms/spring}
 management:
   tracing:
     enabled: true
