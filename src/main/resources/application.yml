@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: resilience-spring
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
   security:
     oauth2:
       resourceserver:

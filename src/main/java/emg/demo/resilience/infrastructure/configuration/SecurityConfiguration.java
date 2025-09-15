@@ -11,7 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,18 +31,21 @@ public class SecurityConfiguration {
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/graphiql", "/graphiql/**").permitAll()
+                        .requestMatchers("/graphql").permitAll()
                         // Protected endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                         // All other requests need authentication
                         .anyRequest().authenticated())
-                .headers(headers -> {
+                /*.headers(headers -> {
                     headers.contentTypeOptions(c -> {});
                     headers.referrerPolicy(r -> r.policy(ReferrerPolicy.NO_REFERRER));
                     headers.frameOptions(f -> f.deny());
                     headers.permissionsPolicy(p -> p.policy("geolocation=(), microphone=(), camera=()"));
-                    headers.contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'none'"));
+                    headers.contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'; img-src 'self' data:; connect-src 'self'; style-src 'self' 'unsafe-inline' https://esm.sh; script-src 'self' 'unsafe-inline' https://esm.sh"));
                 })
+                 */
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt

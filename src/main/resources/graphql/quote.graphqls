@@ -1,0 +1,8 @@
+type QuoteResponse {
+    quote: String!
+    length: Int!
+}
+
+type Query {
+    quote: QuoteResponse!
+}
