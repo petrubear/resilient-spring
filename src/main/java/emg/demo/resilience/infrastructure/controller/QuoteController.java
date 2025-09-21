@@ -1,6 +1,7 @@
 package emg.demo.resilience.infrastructure.controller;
 
 import emg.demo.resilience.application.services.QuoteService;
+import emg.demo.resilience.infrastructure.mapper.QuoteResponseMapper;
 import emg.demo.resilience.infrastructure.model.dto.QuoteResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,7 +38,7 @@ public class QuoteController {
     })
     public ResponseEntity<QuoteResponse> getQuote() {
         return quoteService.getQuote().map(q ->
-                ResponseEntity.ok(QuoteResponse.from(q))
+                ResponseEntity.ok(QuoteResponseMapper.from(q))
         ).orElse(
                 ResponseEntity.internalServerError().build()
         );
